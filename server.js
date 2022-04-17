@@ -29,6 +29,22 @@ app.post("/todos", async(req, res) => {
     }
 })
 
+// app.put("/todos/:id", async (req, res) => {
+//     const {id} = req.params;
+
+// }
+// )
+
+app.get("/todos", async (req, res) => {
+    try  {
+        const allTodos = await pool.query("SELECT * FROM todo");
+        console.log(allTodos.rows)
+        res.json(allTodos.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 app.listen (5000, () => { 
     console.log("server is listening on port 5000");
 })

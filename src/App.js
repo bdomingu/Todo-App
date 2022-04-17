@@ -11,6 +11,7 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [status, setStatus] = useState('all');
   const [filteredTodos, setFilteredTodos] = useState([]);
+  const [totalTodos, setTotalTodos] = useState(null);
 
 
   useEffect(() => {
@@ -30,18 +31,23 @@ function App() {
       default:
         setFilteredTodos(todos);
         break;
+        
 
     }
   };
- 
-  const saveTodos = () => {
-    axios.post('http://localhost:5000/todos',todos).then((response) => {
-      setTodos(response)
 
-    })
+  useEffect(() => {
+    axios.get('http://localhost:5000/todos').then(response => {
+      setTotalTodos(response.data.total)
+      console.log(response);
     
-  }
- 
+    } ).catch(error => {
+      console.error("There was an error", error);
+    });
+      
+
+  },[]);
+
 
   return (
     <div className="App">
